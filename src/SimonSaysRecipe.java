@@ -17,6 +17,8 @@ public class SimonSaysRecipe extends KeyAdapter {
  // 1. Make a JFrame variable 
  JFrame frame = new JFrame();
  	HashMap<Integer,String> images = new HashMap<Integer, String>();
+ 	int Points = 0;
+ 	int Random;
  	private int imageIndex;
  	private int tries = 0;
  	private int simonSays = 0;
@@ -35,19 +37,37 @@ showImage();
 	public void keyPressed(KeyEvent e) {
     	int keyCode = e.getKeyCode();
     	// 16. make a points variable to track the score. tell the user their score at the end.
+     	
     	//17. if the keyCode matches the imageIndex and "Simon says..."  increase their score
-    	//18.   if the keyCode doesn't match the imageIndex and "Simon didn't say..."  increase their score	
+    	if (keyCode==imageIndex && Random==1 ) {
+    		Points = Points + 1;
+			speak("YOU DID IT");
+		}
+    	//18.   if the keyCode doesn't match the imageIndex and "Simon didn't say..."  increase their score
+    	else if (keyCode!=imageIndex && Random==0) {
+    		Points = Points + 1;
+    		speak("YOU DID IT");
+			
+		}
+    	else {
+			speak("Sorry, you failed your family");
+		}
     	//19. Use the speak method to tell the user if they were correct or not
+    	//done
     	//13. increment tries by 1
-  	
+  	tries = tries + 1;
     	//14. if tries is greater than 9 (or however many you want)
-    	
+    	if (tries>=9) {
+    		System.out.println("your score is " + Points + " out of " + tries);
+    		System.exit(0);
+			
+		}
     	//15.    	exit the program
-
+//done
     	//11. dispose of the frame
-   	
+   	frame.dispose();
     	//12. call the method to show an image
-
+showImage();
 	}
 	private void showImage() {
     	//5. initialize your frame to a new JFrame()
@@ -57,19 +77,20 @@ showImage();
   	frame.add(getNextRandomImage()); //7. rename to the name of your frame
     	
     	// 8. set the size of the frame 
-     	frame.setSize(40, 40);
+     	frame.setSize(400, 400);
     	// 9. add a key listener to the frame
      	frame.addKeyListener(this);
 	
    	 //10. Use the speak method to either say "Simon says press this key" or "Press this key"
-     	int random = new Random().nextInt(2);
-     	if (random==1) {
+     	 Random = new Random().nextInt(2);
+     	if (Random==1) {
      		speak("Simon says press this key ");
 		
 		}
-     	else if (random==0) {
+     	else if (Random==0) {
 			speak("Press this key");
 		}
+     	
     	//Hint: use the simonSays int and a random number
 	}
 	private Component getNextRandomImage() {
